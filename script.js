@@ -12,7 +12,7 @@ require([
   var map = new Map('map', {
     basemap: 'gray-vector',
     center: [66.9, 34.5],  // Afghanistan center
-    zoom: 6
+    zoom: 3
   });
 
   // --- Add provinces layer ---
