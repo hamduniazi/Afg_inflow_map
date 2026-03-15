@@ -13,10 +13,42 @@ require([
   var map = new Map('map', {
     basemap: 'gray-vector',
     center: [66.9, 34.5],
-    zoom:12
+    zoom:6
   });
-  
 
+
+
+  
+require([
+  "esri/layers/GraphicsLayer",
+  "esri/graphic",
+  "dojo/request"
+], function(GraphicsLayer, Graphic, request) {
+
+  var provinceLayer = new GraphicsLayer();
+  map.addLayer(provinceLayer);
+
+  request.get("data/province.json", {
+    handleAs: "json"
+  }).then(function(data) {
+
+    data.features.forEach(function(feature){
+
+      var graphic = new Graphic({
+        geometry: feature.geometry,
+        attributes: feature.properties
+      });
+
+      provinceLayer.add(graphic);
+    });
+
+  });
+
+});
+
+
+
+  
   map.on('load', function() {
     var oneToManyLayer = new CanvasFlowmapLayer({
       id: 'oneToManyLayer',
