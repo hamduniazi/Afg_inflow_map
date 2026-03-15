@@ -45,7 +45,14 @@ require([
   });
 
 });
-
+symbol: {
+  type: "simple-fill",
+  color: [0,0,0,0],
+  outline: {
+    color: [120,120,120],
+    width: 1
+  }
+}
 
 
   
