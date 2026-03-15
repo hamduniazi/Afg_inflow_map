@@ -48,34 +48,49 @@ require([
 
     request.get("Province_Boundaries.json", { handleAs: "json" }).then(function(data){
 
-      data.features.forEach(function(feature){
 
-        // create polygon geometry from JSON
-        var polygon = new Polygon(feature.geometry);
 
-        // create province border style
-        var symbol = new SimpleFillSymbol(
-          SimpleFillSymbol.STYLE_SOLID,
-          new SimpleLineSymbol(
-            SimpleLineSymbol.STYLE_SOLID,
-            new Color([120,120,120]), // gray border
-            1
-          ),
-          new Color([0,0,0,0]) // transparent fill
-        );
+      
+   data.features.forEach(function(feature){
 
-        // create graphic
-        var graphic = new Graphic(
-          polygon,
-          symbol,
-          feature.attributes
-        );
+  var polygon = new Polygon(feature.geometry);
 
-        provinceLayer.add(graphic);
+  var symbol = new SimpleFillSymbol(
+    SimpleFillSymbol.STYLE_SOLID,
+    new SimpleLineSymbol(
+      SimpleLineSymbol.STYLE_SOLID,
+      new Color([120,120,120]),
+      1
+    ),
+    new Color([0,0,0,0])
+  );
 
+  // Province border
+  var graphic = new Graphic(
+    polygon,
+    symbol,
+    feature.attributes
+  );
+
+  provinceLayer.add(graphic);
+
+
+  // -------- ADD PROVINCE LABEL --------
+  var labelPoint = polygon.getExtent().getCenter();
+
+  var textSymbol = new TextSymbol(feature.attributes.ADM1_NAME)
+      .setColor(new Color([50,50,50]))
+      .setFont({
+        size: "10pt",
+        family: "Arial"
       });
 
-    });
+  var labelGraphic = new Graphic(labelPoint, textSymbol);
+
+  provinceLayer.add(labelGraphic);
+  // -----------------------------------
+
+});
 
     // ==========================================================
     // EXISTING SECTION: FLOW MAP LAYER (unchanged)
