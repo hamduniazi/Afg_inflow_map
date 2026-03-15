@@ -19,7 +19,7 @@ require([
   var provinceLayer = new GraphicsLayer();
   map.addLayer(provinceLayer);
 
-  request.get("data/province.json", { handleAs: "json" }).then(function(data) {
+  request.get("csv-data/province.json", { handleAs: "json" }).then(function(data) {
     data.features.forEach(function(feature) {
       var graphic = new Graphic({
         geometry: feature.geometry,
