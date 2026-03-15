@@ -15,7 +15,14 @@ require([
     center: [66.9, 34.5],
     zoom: 5
   });
-
+  
+  var provinces = new FeatureLayer(
+    "https://services.arcgis.com/.../FeatureServer/0",
+    {
+      outFields: ["*"],
+      opacity: 0.6
+    }
+  );
   map.on('load', function() {
     var oneToManyLayer = new CanvasFlowmapLayer({
       id: 'oneToManyLayer',
